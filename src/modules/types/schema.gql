@@ -1,0 +1,10 @@
+scalar Email
+scalar Password
+scalar Image
+scalar Any
+
+type Response {
+  status: Int!
+  message: String!
+  data: Any
+}

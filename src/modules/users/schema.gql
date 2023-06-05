@@ -1,0 +1,19 @@
+type Query {
+  login(email: Email!, password: Password!): Response!
+}
+
+type Mutation {
+  createUser(
+    username: String!
+    email: Email!
+    password: Password!
+    avatar: Image!
+  ): Response!
+
+  updateUser(
+    username: String
+    email: Email
+    password: Password
+    avatar: Image
+  ): Response!
+}
