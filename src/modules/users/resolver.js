@@ -4,12 +4,13 @@ import path from "path";
 import fs from "fs";
 import jwt from "jsonwebtoken";
 import { tokenVerify } from "../../utils/tokenVerify.js";
+import { UploadFile } from "../../utils/uploadFile.js";
 const TOKEN_KEY = process.env.TOKEN_KEY;
 
 // Users.sync({ force: false });
 // Korzina.sync({ force: false });
 // Category.sync({ force: false });
-// Cars.sync({ force: false });
+// Cars.sync({ force: false });ss
 
 export default {
   Query: {
@@ -60,18 +61,11 @@ export default {
         const user = await Users.findOne({ where: { email } });
         if (user) return { status: 400, message: "Email already exist" };
 
-        const { filename, createReadStream } = file;
-        const fileUrl = `${uuidv4()}${path.extname(filename)}`;
-        const stream = createReadStream();
-        const fileAddress = path.join(process.cwd(), "uploads", fileUrl);
-        const out = fs.createWriteStream(fileAddress);
-        stream.pipe(out);
-
         Users.create({
           username,
           email,
           password: jwt.sign(password, TOKEN_KEY),
-          avatar_url: fileUrl,
+          avatar_url: UploadFile(file),
         });
 
         return {
@@ -93,7 +87,7 @@ export default {
         const foundUser = await tokenVerify(context);
         if (!foundUser) return { status: 400, message: "Not Login" };
 
-        let { id, username, email, password, avatar } = foundUser;
+        let { id, username, email, password, avatar, role } = foundUser;
         username = args?.username ? args.username : username;
         email = args?.email ? args.email : email;
         password = args?.password
@@ -101,13 +95,7 @@ export default {
           : password;
 
         if (args.avatar) {
-          const { filename, createReadStream } = args.avatar_url.file;
-          const fileUrl = `${uuidv4()}${path.extname(filename)}`;
-          const stream = createReadStream();
-          const fileAddress = path.join(process.cwd(), "uploads", fileUrl);
-          const out = fs.createWriteStream(fileAddress);
-          stream.pipe(out);
-          avatar = fileUrl;
+          avatar = UploadFile(args.avatar.file);
         }
 
         const res = await Users.update(
@@ -116,6 +104,7 @@ export default {
             email,
             password,
             avatar,
+            role,
           },
           { where: { id } }
         );
@@ -131,7 +120,7 @@ export default {
 
         return {
           status: 200,
-          message: "User updated",
+          message: "User did not updated",
         };
       } catch (error) {
         return {

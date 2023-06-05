@@ -30,6 +30,11 @@ export const Users = sequelize.define(
       type: DataTypes.ARRAY(DataTypes.INTEGER),
       allowNull: true,
     },
+    role: {
+      type: DataTypes.STRING(10),
+      allowNull: true,
+      defaultValue: "user",
+    },
   },
   { tableName: "users" }
 );

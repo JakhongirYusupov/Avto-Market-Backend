@@ -1,0 +1,23 @@
+type Query {
+  getCars(category_id: Int!): Response!
+}
+
+type Mutation {
+  createCar(
+    name: String!
+    category_id: Int!
+    tanirovka: String!
+    motor: Float!
+    year: Int!
+    color: String!
+    distance: String!
+    gearbook: String!
+    narxi: Int!
+    three_model: String!
+    tashqi_rasm: [Image]
+    ichki_rasm: [Image]
+    info: String!
+  ): Response!
+
+  like(car_id: Int!): Response!
+}

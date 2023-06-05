@@ -1,0 +1,3 @@
+type Mutation {
+  createKorzina(car_id: Int!): Response!
+}

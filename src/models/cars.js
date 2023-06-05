@@ -6,12 +6,16 @@ export const Cars = sequelize.define("cars", {
     autoIncrement: true,
     primaryKey: true,
   },
+  name: {
+    type: DataTypes.STRING(100),
+    allowNull: false,
+  },
   tanirovka: {
     type: DataTypes.STRING(10),
     allowNull: false,
   },
   motor: {
-    type: DataTypes.SMALLINT,
+    type: DataTypes.FLOAT,
     allowNull: false,
   },
   year: {
@@ -39,11 +43,11 @@ export const Cars = sequelize.define("cars", {
     allowNull: false,
   },
   tashqi_rasm: {
-    type: DataTypes.STRING(500),
+    type: DataTypes.ARRAY(DataTypes.STRING(500)),
     allowNull: false,
   },
   ichki_rasm: {
-    type: DataTypes.STRING(500),
+    type: DataTypes.ARRAY(DataTypes.STRING(500)),
     allowNull: false,
   },
   info: {
