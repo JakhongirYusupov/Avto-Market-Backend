@@ -17,6 +17,7 @@ export default {
   Mutation: {
     createCategory: async (_, args, context) => {
       try {
+        console.log(args);
         const user = await tokenVerify(context);
         if (!user || user?.role !== "admin")
           return { status: 400, message: "Not Login" };

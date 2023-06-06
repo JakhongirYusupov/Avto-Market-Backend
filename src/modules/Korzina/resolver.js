@@ -1,8 +1,20 @@
-import { Korzina } from "../../models/index.js";
+import { Cars, Korzina } from "../../models/index.js";
 import { tokenVerify } from "../../utils/tokenVerify.js";
-import Cars from "../Cars/index.js";
 
 export default {
+  // Query: {
+  //   getKorzina: async(_,args, context) => {
+  //     const user = await tokenVerify(context);
+  //       if (!user)
+  //         return { status: 400, message: "Not Login" };
+  //     const data = await Korzina.findAll({})
+  //     return {
+  //       status: 200,
+  //       message: "Success",
+  //       data
+  //     }
+  //   }
+  // },
   Mutation: {
     createKorzina: async (_, args, context) => {
       try {

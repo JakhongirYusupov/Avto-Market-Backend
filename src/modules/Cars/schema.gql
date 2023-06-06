@@ -1,5 +1,6 @@
 type Query {
   getCars(category_id: Int!): Response!
+  getCarInfo(category_id: Int!, car_id: Int!): Response!
 }
 
 type Mutation {
@@ -15,7 +16,7 @@ type Mutation {
     narxi: Int!
     three_model: String!
     tashqi_rasm: [Image]
-    ichki_rasm: [Image]
+    ichki_rasm: [Any]
     info: String!
   ): Response!
 

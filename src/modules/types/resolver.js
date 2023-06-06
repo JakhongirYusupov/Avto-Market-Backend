@@ -27,6 +27,7 @@ function emailTest(value) {
 }
 
 function imageTest(value) {
+  console.log(value);
   const { file } = value;
   if (!["image/jpeg", "image/png", "image/jpg"].includes(file.mimetype)) {
     throw new Error("Media must be jpeg, png or jpg");

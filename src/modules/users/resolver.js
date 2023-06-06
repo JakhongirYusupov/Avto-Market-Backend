@@ -32,7 +32,7 @@ export default {
 
         return {
           status: 200,
-          message: "User updated",
+          message: "User login",
           data: {
             token: jwt.sign(user.dataValues, TOKEN_KEY + context["user-agent"]),
           },

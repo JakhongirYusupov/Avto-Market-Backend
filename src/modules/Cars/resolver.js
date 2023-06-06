@@ -1,4 +1,4 @@
-import { Cars, Users } from "../../models/index.js";
+import { Cars, Category, Users } from "../../models/index.js";
 import { tokenVerify } from "../../utils/tokenVerify.js";
 import { UploadFile } from "../../utils/uploadFile.js";
 
@@ -9,19 +9,52 @@ export default {
 
       const data = await Cars.findAll({ where: { category_id } });
 
+      if (!data.length)
+        return {
+          status: 404,
+          message: "This category not found",
+        };
+
       return {
         status: 200,
-        message: "Okay",
+        message: "Success",
         data,
+      };
+    },
+    getCarInfo: async (_, args) => {
+      const { category_id, car_id } = args;
+
+      const category = await Category.findOne({ where: { id: category_id } });
+
+      if (!category)
+        return {
+          status: 200,
+          message: "Category not found",
+        };
+
+      const car = await Cars.findOne({ where: { id: car_id } });
+
+      if (!car)
+        return {
+          status: 200,
+          message: "Car not found",
+        };
+
+      return {
+        status: 200,
+        message: "Success",
+        data: car,
       };
     },
   },
   Mutation: {
     createCar: async (_, args, context) => {
       try {
-        const user = await tokenVerify(context);
-        if (!user || user?.role !== "admin")
-          return { status: 400, message: "Not Login" };
+        // const user = await tokenVerify(context);
+        // if (!user || user?.role !== "admin")
+        //   return { status: 400, message: "Not Login" };
+
+        console.log(args);
 
         const car = await Cars.findOne({ where: { name: args.name } });
         if (car)
